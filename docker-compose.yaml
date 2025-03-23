@@ -1,0 +1,20 @@
+# used in dev mode solely
+
+services:
+  logistic-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      tags:
+        - "logistic-app:dev"
+    container_name: logistic-app
+    ports:
+      - "8000:80"
+    networks:
+      - dev-service-network
+    volumes:
+      - "./:/app"
+
+networks:
+  dev-service-network:
+    driver: bridge
