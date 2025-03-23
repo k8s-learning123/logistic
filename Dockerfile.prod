@@ -13,11 +13,17 @@ RUN pip install -r requirements.txt
 
 COPY src/ src/
 
+COPY tests/ tests/
+
 EXPOSE 80 443
 
-# Create a new user and switch that user
-RUN useradd appuser
+# Create a new user
+RUN useradd -m appuser
 
+# Change ownership of the entire /app directory to appuser
+RUN chown -R appuser:appuser /app
+
+# Switch to the new user
 USER appuser
 
 CMD ["uvicorn", "--port", "80", "--host", "0.0.0.0", "src.app:app"]
