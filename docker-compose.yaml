@@ -1,4 +1,4 @@
-# used in dev mode solely
+# used solely in dev mode 
 
 services:
   logistic-app:
