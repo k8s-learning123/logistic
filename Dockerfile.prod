@@ -1,0 +1,23 @@
+FROM python:3.9.21
+
+# Install required packages to manage users
+RUN apt-get update && apt-get install -y \
+    passwd \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY src/ src/
+
+EXPOSE 80 443
+
+# Create a new user and switch that user
+RUN useradd appuser
+
+USER appuser
+
+CMD ["uvicorn", "--port", "80", "--host", "0.0.0.0", "src.app:app"]
