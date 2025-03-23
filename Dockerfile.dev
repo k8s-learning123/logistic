@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 80 443
 
-CMD ["uvicorn", "--port", "80", "--host", "0.0.0.0", "--reload", "src.app:app"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "80", "--reload", "src.app:app"]
