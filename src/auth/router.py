@@ -1,9 +1,12 @@
 from fastapi import APIRouter
 
+from src.cache_client import cache_client
+
 router = APIRouter()
 
 @router.get("/")
-def main():
+async def main():
+    cache_client.set("name", "example", 300)
     return {
-        "message": "main page"
+        "message": await cache_client.get("name")
     }

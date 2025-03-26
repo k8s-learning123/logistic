@@ -14,7 +14,27 @@ services:
       - dev-service-network
     volumes:
       - "./:/app"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=12345
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: ["redis-server", "--requirepass", "12345"]  # Enforce password authentication
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=12345
+    volumes:
+      - redis_data:/data
+    networks:
+      - dev-service-network
 
 networks:
   dev-service-network:
     driver: bridge
+
+volumes:
+  redis_data:
